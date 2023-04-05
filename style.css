@@ -3,18 +3,68 @@
     margin: 0;
     box-sizing: border-box;
 }
+/* ///////////////////////////////////HEADER SECTION STYLES //////////////////////////////////////////////// */
 
 #header {
     border: 1px solid black;
-
+    padding: 2em;
 }
+
+#header h1 {
+    text-align: center;
+}
+
+#inputSection {
+    text-align: center;
+    padding: 2em;
+    background-color: lightGrey;
+}
+
+#inputForm {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    width: 50%;
+    border: solid 2px red;
+    margin: 0 auto;
+}
+
+/* ///////////////////////////////////MAIN SECTION STYLES //////////////////////////////////////////////// */
+#inputSection, #todoSection {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#todoList {
+width: 80%;
+text-align: center;
+list-style: none;
+}
+
+.todoListItem {
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}
+
 
 #main {
     border: 1px solid black;
 
 }
 
+
+
+
+
+
+
+
+
+/* ///////////////////////////////////FOOTER SECTION STYLES //////////////////////////////////////////////// */
+
 #footer {
     border: 1px solid black;
 
 }
+
