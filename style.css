@@ -7,17 +7,25 @@
 
 #header {
     border: 1px solid black;
-    padding: 2em;
+    background-image: url();
+    padding: 5em;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #header h1 {
     text-align: center;
+    color: black;
 }
 
 #inputSection {
     text-align: center;
     padding: 2em;
-    background-color: lightGrey;
+    background-color: lightgray;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid black;
 }
 
 #inputForm {
@@ -29,10 +37,23 @@
     margin: 0 auto;
 }
 
+#inputBtn {
+    padding: 0.7em;
+}
 /* ///////////////////////////////////MAIN SECTION STYLES //////////////////////////////////////////////// */
 #inputSection, #todoSection {
     width: 80%;
     margin: 0 auto;
+}
+
+#main {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: lightgray;
+    width: 75%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 2em;
 }
 
 #todoList {
@@ -44,13 +65,27 @@ list-style: none;
 .todoListItem {
     display: flex;
     justify-content: center;
+    gap: 1em;
+}
+
+.listValue {
+    vertical-align: middle;
+}
+
+.editBtn,
+.delBtn {
+    padding: 0.7em;
+}
+
+#listBtns {
+    display: flex;
+    justify-content: flex-end;
     gap: 2em;
 }
 
-
-#main {
-    border: 1px solid black;
-
+#saveListBtn,
+#loadListBtn {
+    padding: 0.7em;
 }
 
 

@@ -1,43 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Shopping List</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <header id="header">
-            <h1>To Do Liste: Shopping List</h1>
-            <section id="inputSection">
-                <form id="inputForm" action="">
-                    <input id="inputField" type="text" />
-                    <button id="inputBtn">Add To Shopping Cart</button>
-                </form>
-            </section>
-        </header>
-        <main id="main">
-            <section id="todoSection">
-                <ul id="todoList">
-                    <li id="todoListItem1" class="todoListItem">
-                        <span id="listValue1" class="listValue">Element 1</span>
-                        <button id="editBtn1" class="editBtn">Edit</button>
-                        <button id="delBtn1" class="delBtn">X</button>
-                    </li>
-                    <li id="todoListItem2" class="todoListItem">
-                        <span id="listValue2" class="listValue">Element 2</span>
-                        <button id="editBtn2" class="editBtn">Edit</button>
-                        <button id="delBtn2" class="delBtn">X</button>
-                    </li>
-                </ul>
-                <button id="saveListBtn">Save</button>
-                <button id="loadListBtn">Load</button>
-            </section>
-        </main>
-        <footer id="footer">
-            <h1>Links to Social media</h1>
-        </footer>
-        <script src="script.js"></script>
-    </body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header id="header">
+      <h1>To Do Liste: Shopping List</h1><br>
+      <section id="inputSection">
+        <form id="inputForm" action="">
+          <input id="inputField" type="text" placeholder="What's missing...?"/>
+          <button id="inputBtn">Add To Shopping Cart</button>
+        </form>
+      </section>
+    </header>
+    <main id="main">
+      <section id="todoSection">
+        <ul id="todoList">
+          <li id="todoListItem1" class="todoListItem">
+            <span id="listValue1" class="listValue">Element 1</span>
+                <button id="editBtn1" class="editBtn">Edit</button>
+                <button id="delBtn1" class="delBtn">X</button>
+          </li>
+          <li id="todoListItem2" class="todoListItem">
+            <span id="listValue2" class="listValue">Element 2</span>
+                <button id="editBtn2" class="editBtn">Edit</button>
+                <button id="delBtn2" class="delBtn">X</button>
+          </li>
+        </ul>
+        <div id="listBtns">
+          <button id="saveListBtn">Save</button>
+          <button id="loadListBtn">Load</button>
+        </div>
+      </section>
+    </main>
+    <footer id="footer">
+      <h1>Links to Social media</h1>
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
