@@ -3,6 +3,13 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+
+body {
+    background-color: rgb(0, 85, 0);
+    color: white;
+    font-family: "Open Sans", sans-serif;
+}
 /* ///////////////////////////////////HEADER SECTION STYLES //////////////////////////////////////////////// */
 
 #header {
@@ -16,7 +23,7 @@
 
 #header h1 {
     text-align: center;
-    color: black;
+    color: white;
 }
 
 #inputSection {
@@ -37,8 +44,15 @@
     margin: 0 auto;
 }
 
+#inputField {
+    border-radius: 5px;
+    padding-left: 10px;
+
+}
+
 #inputBtn {
     padding: 0.7em;
+    border-radius: 5px;
 }
 /* ///////////////////////////////////MAIN SECTION STYLES //////////////////////////////////////////////// */
 #inputSection, #todoSection {
@@ -60,21 +74,21 @@
 width: 80%;
 text-align: center;
 list-style: none;
+border: 1px solid black;
 }
 
 .todoListItem {
     display: flex;
     justify-content: center;
     gap: 1em;
-}
-
-.listValue {
-    vertical-align: middle;
+    border: 1px solid black;
 }
 
 .editBtn,
 .delBtn {
     padding: 0.7em;
+    border-radius: 5px;
+
 }
 
 #listBtns {
@@ -86,6 +100,7 @@ list-style: none;
 #saveListBtn,
 #loadListBtn {
     padding: 0.7em;
+    border-radius: 5px;
 }
 
 
