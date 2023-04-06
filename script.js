@@ -12,19 +12,35 @@
 
 //WO
 
-let addBtn = document.getElementById("inputBtn");
-let inputField = document.getElementById("inputField");
-let outputField = document.getElementById("todoList");
+let addBtn = document.getElementById('inputBtn');
+let inputField = document.getElementById('inputField');
+let outputField = document.getElementById('todoList');
 
 
 //WAS
-function testing() {
-    let newListItem = document.createElement("span");
-    newListItem.classList.add("todoListItem");
-    outputField.appendChild(newListItem);
-    newListItem.innerText = inputField.value;
+function testing(e) {
+    e.preventDefault();
+    const newListItem = document.createElement('li');
+    newListItem.classList.add('todoListItem');
 
+    const newSpanItem = document.createElement('span');
+    newSpanItem.classList.add('listValue');
+    newSpanItem.innerText = inputField.value;
+
+    const editBtn = document.createElement('button');
+    editBtn.classList.add('editBtn');
+    editBtn.textContent = 'Edit';
+
+    const delBtn = document.createElement('button');
+    delBtn.classList.add('delBtn');
+    delBtn.textContent = 'X';
+    
+    newListItem.appendChild(newSpanItem);
+    newListItem.appendChild(editBtn);
+    newListItem.appendChild(delBtn);
+    
+    outputField.appendChild(newListItem);
 }
 
 //WANN
-addBtn.addEventListener("click", testing);
+addBtn.addEventListener('click', testing);
