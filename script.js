@@ -19,7 +19,8 @@ let outputField = document.getElementById("todoList");
 
 //WAS
 function testing() {
-    let newListItem = document.createElement("li");
+    let newListItem = document.createElement("span");
+    newListItem.classList.add("todoListItem");
     outputField.appendChild(newListItem);
     newListItem.innerText = inputField.value;
 
