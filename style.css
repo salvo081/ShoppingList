@@ -3,3 +3,125 @@
     margin: 0;
     box-sizing: border-box;
 }
+
+
+body {
+    background-color: #344e41;
+    color: #dad7cd;
+    font-family: "Open Sans", sans-serif;
+}
+/* ///////////////////////////////////HEADER SECTION STYLES //////////////////////////////////////////////// */
+
+#header {
+    border: 1px solid black;
+   /* background-image: url(img/shoppingCart.jpg); 
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center; */
+}
+
+#header h1 {
+    text-align: center;
+    color: #dad7cd;
+    background-color: #344e41;
+
+}
+
+#inputSection {
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+#inputForm {
+    display: flex;
+    justify-content: center;
+    gap: 3em;
+    width: 50%;
+    border: solid 2px black;
+    margin: 0 auto;
+}
+
+#inputField {
+    border-radius: 5px;
+    padding-left: 10px;
+    color: #344e41;
+    font-weight: bold;
+
+}
+
+#inputBtn {
+    padding: 0.7em;
+    border-radius: 5px;
+    color: #344e41;
+    font-weight: bold;
+}
+/* ///////////////////////////////////MAIN SECTION STYLES //////////////////////////////////////////////// */
+#inputSection, #todoSection {
+    width: 80%;
+    margin: 0 auto;
+    padding: 2em;
+    background-color: #dad7cd;
+}
+
+#main {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #dad7cd;
+    text-align: center;
+    margin: 4em auto;
+    width: 80%;
+}
+
+#todoList {
+text-align: center;
+list-style: none;
+border: 1px solid black;
+}
+
+.todoListItem {
+    display: flex;
+    justify-content: flex-end;
+    gap: 3em;
+    border: 1px solid black;
+    color:#344e41;
+    align-items: center;
+}
+
+.editBtn,
+.delBtn {
+    padding: 0.7em;
+    border-radius: 5px;
+    color: #344e41;
+    font-weight: bold;
+}
+
+#listBtns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2em;
+}
+
+#saveListBtn,
+#loadListBtn {
+    padding: 0.7em;
+    border-radius: 5px;
+    color: #344e41;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+/* ///////////////////////////////////FOOTER SECTION STYLES //////////////////////////////////////////////// */
+
+#footer {
+    border: 1px solid black;
+
+}
+
