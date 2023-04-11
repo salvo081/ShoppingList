@@ -11,7 +11,7 @@
 //keine Elemente aus dem DOM verwenden
 //Model kennt das DOM nicht
 const todoList = [
-    // {id: '1', listValue: 'Apples'}
+    // {id: '1', listValue: 'Apples', done: false}
 ];
 
 function generateId() {
@@ -99,8 +99,9 @@ function deleteListItem(id) {
     //TODO deleteListItem
 }
 
-function markAsDoneListItem(id) {
+function markAsDoneListItem(id, target) {
     //TODO markAsDoneListItem
+    target.classList.toggle("todoListItemChecked");
 }
 
 function loadListItems(todoList) {
@@ -136,8 +137,12 @@ function handleDeleteTodo(id) {
     //TODO handleDeleteTodo
 }
 
-function handleMarkAsDoneTodo(id) {
-    //TODO handleMarkAsDoneTodo
+function handleMarkAsDoneTodo(id, target) {
+    //Update Model
+    markAsDoneListItem(id, target);
+
+    //Update View
+
 }
 
 function handleSaveTodoList() {
@@ -157,7 +162,8 @@ function handleLoadTodoList() {
 }
 
 //Event listener
-function onInputFormSubmit(e) {
+//WANN
+inputForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const listValue = getListValue();
@@ -165,8 +171,11 @@ function onInputFormSubmit(e) {
     handleAddTodo(listValue);
 
     console.log(todoList);
-}
+});
 
-//WANN
-inputForm.addEventListener('submit', onInputFormSubmit);
+outputField.addEventListener("click", (e) => {
+    // outputField.classList.toggle("todoListItem");
+    // e.target.classList.toggle("todoListItemChecked");
+    handleMarkAsDoneTodo('', e.target);
+    });
 //TODO addEventListener für saveListBtn und loadListBtn

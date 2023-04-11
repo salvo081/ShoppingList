@@ -88,6 +88,13 @@ border: 1px solid black;
     align-items: center;
 }
 
+/* Mark as done */
+.todoListItemChecked {
+    background-color: grey;
+    text-decoration: line-through;
+    color: white;
+}
+
 .editBtn,
 .delBtn {
     padding: 0.7em;
