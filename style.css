@@ -90,14 +90,9 @@ border: 1px solid black;
 
 /* Mark as done */
 .todoListItemChecked{
-    display: flex;
-    justify-content: flex-end;
-    gap: 3em;
-    border: 1px solid black;
     background-color: grey;
     text-decoration: line-through;
     color: white;
-    align-items: center;
 }
 
 

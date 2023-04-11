@@ -49,7 +49,7 @@ addBtn.addEventListener("click", testing);
 
 // Anmerkung: Auch bei Click auf Buttons wird die li eingefärbt, was mit den Funktionen für editieren und löschen kollodiert
 //WO: entweder li
-const todoList = document.querySelectorAll("ul");
+//const todoList = document.getElementsbyTagName("ul");
 const todoValues = document.getElementsByTagName("li");
 const editBtn = document.querySelector(".editBtn");
 const delBtn = document.querySelector(".delBtn");
@@ -101,12 +101,13 @@ const delBtn = document.querySelector(".delBtn");
 //   }
 //     )
 
-for (let todoValue of todoValues) {
-  todoValue.addEventListener("click", (event) => {
-    todoValue.classList.toggle("todoListItem");
-    todoValue.classList.toggle("todoListItemChecked");
-  });
-}
+
+    outputField.addEventListener("click", (event) => {
+    // outputField.classList.toggle("todoListItem");
+    console.log("test");
+    event.target.classList.toggle("todoListItemChecked");
+    });
+
 
 
 //Unklar:
