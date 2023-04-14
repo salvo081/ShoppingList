@@ -163,7 +163,7 @@ function deleteListItem(id, target) {
 
 function markAsDoneListItem(id, target) {
     //TODO markAsDoneListItem
-    target.classList.toggle("todoListItemChecked");
+    target.closest('li').classList.toggle("todoListItemChecked");
 }
 
 function loadListItems(todoList) {
