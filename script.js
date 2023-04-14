@@ -201,8 +201,13 @@ function handleEditTodo(id, target) {
     }
 }
 
-function handleDeleteTodo(id) {
-    //TODO handleDeleteTodo
+function handleDeleteTodo(id, target) {
+    //Update Model
+    markAsDoneListItem(id, target);
+
+    //Update View
+    markAsDoneTodo(id);
+
 }
 
 function handleMarkAsDoneTodo(id, target) {
@@ -248,22 +253,24 @@ inputForm.addEventListener('submit', (e) => {
 });
 
 outputField.addEventListener("click", (e) => {
-    // outputField.classList.toggle("todoListItem");
-    // e.target.classList.toggle("todoListItemChecked");
     const tagName = e.target.tagName;
+    if (tagName === 'UL') return;
+
+    //id aus dem li-Tag auslesen
+    const id = e.target.closest('li').dataset.id;
 
     if (tagName === 'LI' || tagName === 'SPAN') {
-        handleMarkAsDoneTodo('', e.target);
+        handleMarkAsDoneTodo(id, e.target);
     } else if (tagName === 'BUTTON') {
         const btnName = e.target.name;
         // console.log(e.target.name);
 
         if (btnName === 'editBtn') {
             console.log('editBtn');
-            handleEditTodo('', e.target);
+            handleEditTodo(id, e.target);
         } else if (btnName === 'delBtn') {
             console.log('delBtn');
-            handleDeleteTodo();
+            handleDeleteTodo(id, target);
             e.target.parentElement.classList.add('hide');
             console.log(e.target.parentElement);
         }
