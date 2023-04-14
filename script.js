@@ -10,7 +10,7 @@
 //nur das Array und die Functions verwenden
 //keine Elemente aus dem DOM verwenden
 //Model kennt das DOM nicht
-const todoList = [
+let todoList = [
     // {id: '1', listValue: 'Apples', done: false}
 ];
 
@@ -46,10 +46,16 @@ function markAsDoneTodo(id) {
 
 function saveTodoList() {
     //TODO save to Local Storage
+    const jsonList = JSON.stringify(todoList);
+    // console.log(jsonList);
+    localStorage.setItem("todoList", jsonList);
 }
 
 function loadTodoList() {
     //TODO load from Local Storage
+    // const listFromLocalStorage = ...
+    todoList = JSON.parse(localStorage.getItem("todoList"));
+    // console.log(todoList);
 }
 
 //VIEW
@@ -61,12 +67,15 @@ function loadTodoList() {
 const inputForm = document.getElementById('inputForm');
 const inputField = document.getElementById('inputField');
 const outputField = document.getElementById('todoList');
+const saveListBtn = document.getElementById('saveListBtn');
+const loadListBtn = document.getElementById('loadListBtn');
 
 //WAS
 function createNewListItem(id, listValue) {
     const newListItem = document.createElement('li');
     newListItem.classList.add('todoListItem');
     newListItem.dataset.id = id;
+    newListItem.dataset.mode = 'default';
 
     const newSpanItem = document.createElement('span');
     newSpanItem.classList.add('listValue');
@@ -75,10 +84,12 @@ function createNewListItem(id, listValue) {
     const editBtn = document.createElement('button');
     editBtn.classList.add('editBtn');
     editBtn.textContent = 'Edit';
-
+    editBtn.name = 'editBtn';
+   
     const delBtn = document.createElement('button');
     delBtn.classList.add('delBtn');
     delBtn.textContent = 'X';
+    delBtn.name = 'delBtn';
     
     newListItem.appendChild(newSpanItem);
     newListItem.appendChild(editBtn);
@@ -91,21 +102,93 @@ function addListItem(newListItem) {
     outputField.appendChild(newListItem);
 }
 
-function editListItem(id) {
-    //TODO editListItem
+function editListItem(id, target) {
+    const li = target.parentNode;
+    const liChildren = Array.from(li.children);
+    const span = liChildren.find(tag => tag.tagName === 'SPAN');
+    const inputItem = liChildren.find(tag => tag.tagName === 'INPUT');
+
+    if(li.dataset.mode === 'default') {
+        //mode default
+        if (typeof inputItem === 'undefined') {
+            //inputItem does not exist
+            const newInputItem = document.createElement('input');
+            newInputItem.classList.add('listValueInput');
+            newInputItem.type = 'text';
+            newInputItem.value = span.innerText;
+
+            newInputItem.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    //"target" ist der Parameter aus editListItem(id, target) 
+                    //target => Edit-Button
+                    target.click();
+                }
+            });
+
+            li.insertAdjacentElement('afterbegin', newInputItem);
+            newInputItem.focus();
+        } else {
+            //inputItem exists
+            inputItem.classList.remove('hide');
+            inputItem.focus();
+        }
+
+        span.classList.add('hide');
+        target.innerText = 'Save';
+        li.dataset.mode = 'edit';
+    } else {
+        //mode edit
+        if (typeof inputItem !== 'undefined') {
+            //inputItem exists
+            const inputItemValue = inputItem.value.trim();
+            inputItem.value = inputItemValue;
+
+            if (inputItemValue !== '') {
+                //Input-Item ausblenden
+                inputItem.classList.add('hide');
+                //Span-Item einblenden
+                span.classList.remove('hide');
+                //Button text auf 'Edit' zurücksetzen
+                target.innerText = 'Edit';
+                //Mode für das li auf 'default' zurücksetzen
+                li.dataset.mode = 'default';
+
+                //Prüfen, ob sich der Wert im Input-Item geändert hat
+                if(span.innerText !== inputItemValue) {
+                    span.innerText = inputItemValue;
+                    return {isEditSuccessful: true, id: id, inputItemValue: inputItemValue};
+                }
+            } else {
+                alert('Please enter a value!');
+            }
+        }
+    }
+
+    return {isEditSuccessful: false, id: id, inputItemValue: ''};
 }
 
-function deleteListItem(id) {
-    //TODO deleteListItem
+function deleteListItem(id, target) {
+    target.closest('li').classList.add('hide');
 }
 
 function markAsDoneListItem(id, target) {
-    //TODO markAsDoneListItem
-    target.classList.toggle("todoListItemChecked");
+    target.closest('li').classList.toggle("todoListItemChecked");
 }
 
 function loadListItems(todoList) {
     //TODO loadListItems
+    console.log(todoList);
+
+    while (outputField.firstChild) {
+        outputField.removeChild(outputField.firstChild);
+    }
+
+    todoList.forEach(el => {
+        const newListItem = createNewListItem(el.id, el.listValue);
+        console.log(newListItem);
+
+        outputField.appendChild(newListItem);
+    });
 }
 
 function getListValue() {
@@ -113,7 +196,7 @@ function getListValue() {
 }
 
 function clearListValue() {
-    //TODO clearListValue
+    inputField.value = '';
 }
 
 //CONTROLLER
@@ -127,22 +210,33 @@ function handleAddTodo(listValue) {
     //Update View
     const newListItem = createNewListItem(todoListObj.id, todoListObj.listValue);
     addListItem(newListItem);
+    clearListValue();
 }
 
-function handleEditTodo(id) {
-    //TODO handleEditTodo
+function handleEditTodo(id, target) {
+    //Update View
+    const editObj = editListItem(id, target);
+
+    //Update Model
+    if (editObj.isEditSuccessful) {
+        editTodo(id, editObj.inputItemValue);
+    }
 }
 
-function handleDeleteTodo(id) {
-    //TODO handleDeleteTodo
+function handleDeleteTodo(id, target) {
+    //Update Model
+    deleteTodo(id);
+
+    //Update View
+    deleteListItem(id, target);
 }
 
 function handleMarkAsDoneTodo(id, target) {
     //Update Model
-    markAsDoneListItem(id, target);
+    markAsDoneTodo(id);
 
     //Update View
-
+    markAsDoneListItem(id, target);
 }
 
 function handleSaveTodoList() {
@@ -167,15 +261,46 @@ inputForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const listValue = getListValue();
-    //TODO is listValue not empty?
+
+    // Alert eingebaut, wenn kein Wert in Inputfield eingegeben wurde.
+    if (!listValue.trim()) {
+        alert("Got nothing to add?");
+        return;
+    }
+    
     handleAddTodo(listValue);
 
     console.log(todoList);
 });
 
 outputField.addEventListener("click", (e) => {
-    // outputField.classList.toggle("todoListItem");
-    // e.target.classList.toggle("todoListItemChecked");
-    handleMarkAsDoneTodo('', e.target);
-    });
+    const tagName = e.target.tagName;
+    console.log(tagName);
+    if (tagName === 'UL') return;
+
+    //id aus dem li-Tag auslesen
+    const id = e.target.closest('li').dataset.id;
+
+    if (tagName === 'LI' || tagName === 'SPAN') {
+        handleMarkAsDoneTodo(id, e.target);
+    } else if (tagName === 'BUTTON') {
+        const btnName = e.target.name;
+
+        if (btnName === 'editBtn') {
+            // console.log('editBtn');
+            handleEditTodo(id, e.target);
+        } else if (btnName === 'delBtn') {
+            console.log('delBtn');
+            handleDeleteTodo(id, e.target);
+        }
+    }
+});
 //TODO addEventListener für saveListBtn und loadListBtn
+
+saveListBtn.addEventListener('click', (e) => {
+    handleSaveTodoList();
+});
+
+loadListBtn.addEventListener('click', (e) => {
+    handleLoadTodoList();
+});
