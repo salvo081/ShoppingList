@@ -157,8 +157,8 @@ function editListItem(id, target) {
     return {isEditSuccessful: false, id: id, inputItemValue: ''};
 }
 
-function deleteListItem(id) {
-    //TODO deleteListItem
+function deleteListItem(id, target) {
+    target.closest('li').classList.add('hide');
 }
 
 function markAsDoneListItem(id, target) {
@@ -203,19 +203,18 @@ function handleEditTodo(id, target) {
 
 function handleDeleteTodo(id, target) {
     //Update Model
-    markAsDoneListItem(id, target);
+    deleteTodo(id);
 
     //Update View
-    markAsDoneTodo(id);
-
+    deleteListItem(id, target);
 }
 
 function handleMarkAsDoneTodo(id, target) {
     //Update Model
-    markAsDoneListItem(id, target);
+    markAsDoneTodo(id);
 
     //Update View
-    markAsDoneTodo(id);
+    markAsDoneListItem(id, target);
 }
 
 function handleSaveTodoList() {
@@ -270,9 +269,7 @@ outputField.addEventListener("click", (e) => {
             handleEditTodo(id, e.target);
         } else if (btnName === 'delBtn') {
             console.log('delBtn');
-            handleDeleteTodo(id, target);
-            e.target.parentElement.classList.add('hide');
-            console.log(e.target.parentElement);
+            handleDeleteTodo(id, e.target);
         }
     }
 });
