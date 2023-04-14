@@ -67,6 +67,7 @@ function createNewListItem(id, listValue) {
     const newListItem = document.createElement('li');
     newListItem.classList.add('todoListItem');
     newListItem.dataset.id = id;
+    newListItem.dataset.mode = 'default';
 
     const newSpanItem = document.createElement('span');
     newSpanItem.classList.add('listValue');
@@ -76,8 +77,7 @@ function createNewListItem(id, listValue) {
     editBtn.classList.add('editBtn');
     editBtn.textContent = 'Edit';
     editBtn.name = 'editBtn';
-    // editBtn.addEventListener('click', onEditBtn);
-
+   
     const delBtn = document.createElement('button');
     delBtn.classList.add('delBtn');
     delBtn.textContent = 'X';
@@ -97,12 +97,57 @@ function addListItem(newListItem) {
 function editListItem(id, target) {
     //TODO editListItem
     const li = target.parentNode;
-    const span = li.firstChild;
+    const liChildren = Array.from(li.children);
+    const span = liChildren.find(tag => tag.tagName === 'SPAN');
+    const inputItem = liChildren.find(tag => tag.tagName === 'INPUT');
 
-    console.log(span);
-    li.removeChild(span);
+    if(li.dataset.mode === 'default') {
+        if (typeof inputItem === 'undefined') {
+            //span hidden, inputItem does not exist
+            const newInputItem = document.createElement('input');
+            newInputItem.classList.add('listValueInput');
+            newInputItem.type = 'text';
+            newInputItem.value = span.innerText;
 
-    //const newInputItem = 
+            newInputItem.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    //"target" ist der Parameter aus editListItem(id, target) 
+                    //target => Edit-Button
+                    target.click();
+                }
+            });
+
+            li.insertAdjacentElement('afterbegin', newInputItem);
+            newInputItem.focus();
+        } else {
+            //span hidden, inputItem exists
+            inputItem.classList.remove('hide');
+            inputItem.focus();
+        }
+
+        span.classList.add('hide');
+        target.innerText = 'Save';
+        li.dataset.mode = 'edit';
+    } else {
+        if (typeof inputItem !== 'undefined') {
+            //span visible, inputItem exists
+            const inputItemValue = inputItem.value.trim();
+
+            if (inputItemValue !== '') {
+                span.innerText = inputItemValue;
+                inputItem.classList.add('hide');
+
+                //save inputItemValue to array
+                editTodo(id, inputItemValue);
+
+                span.classList.remove('hide');
+                target.innerText = 'Edit';
+                li.dataset.mode = 'default';
+            } else {
+                alert('Please enter a value!');
+            }
+        }
+    }
 }
 
 function deleteListItem(id) {
@@ -209,14 +254,9 @@ outputField.addEventListener("click", (e) => {
         } else if (btnName === 'delBtn') {
             console.log('delBtn');
             handleDeleteTodo();
-            e.target.parentElement.style.display = "none";
+            e.target.parentElement.classList.add('hide');
             console.log(e.target.parentElement);
         }
     }
 });
-
-function onEditBtn(e) {
-    // console.log(e.target.tagName);
-}
-
 //TODO addEventListener für saveListBtn und loadListBtn
