@@ -134,20 +134,27 @@ function editListItem(id, target) {
             const inputItemValue = inputItem.value.trim();
 
             if (inputItemValue !== '') {
-                span.innerText = inputItemValue;
+                //Input-Item ausblenden
                 inputItem.classList.add('hide');
-
-                //save inputItemValue to array
-                editTodo(id, inputItemValue);
-
+                //Span-Item einblenden
                 span.classList.remove('hide');
+                //Button text auf 'Edit' zurücksetzen
                 target.innerText = 'Edit';
+                //Mode für das li auf 'default' zurücksetzen
                 li.dataset.mode = 'default';
+
+                //Prüfen, ob sich der Wert im Input-Item geändert hat
+                if(span.innerText !== inputItemValue) {
+                    span.innerText = inputItemValue;
+                    return {isEditSuccessful: true, id: id, inputItemValue: inputItemValue};
+                }
             } else {
                 alert('Please enter a value!');
             }
         }
     }
+
+    return {isEditSuccessful: false, id: id, inputItemValue: ''};
 }
 
 function deleteListItem(id) {
@@ -185,10 +192,13 @@ function handleAddTodo(listValue) {
 }
 
 function handleEditTodo(id, target) {
-    //TODO handleEditTodo
-
     //Update View
-    editListItem(id, target);
+    const editObj = editListItem(id, target);
+
+    //Update Model
+    if (editObj.isEditSuccessful) {
+        editTodo(id, editObj.inputItemValue);
+    }
 }
 
 function handleDeleteTodo(id) {
