@@ -75,10 +75,12 @@ function createNewListItem(id, listValue) {
     const editBtn = document.createElement('button');
     editBtn.classList.add('editBtn');
     editBtn.textContent = 'Edit';
-
+    editBtn.name = 'editBtn';
+    
     const delBtn = document.createElement('button');
     delBtn.classList.add('delBtn');
     delBtn.textContent = 'X';
+    delBtn.name = 'delBtn';
     
     newListItem.appendChild(newSpanItem);
     newListItem.appendChild(editBtn);
@@ -173,9 +175,54 @@ inputForm.addEventListener('submit', (e) => {
     console.log(todoList);
 });
 
+// outputField.addEventListener("click", (e) => {
+//     // outputField.classList.toggle("todoListItem");
+//     // e.target.classList.toggle("todoListItemChecked");
+//     handleMarkAsDoneTodo('', e.target);
+//     });
+//TODO addEventListener für saveListBtn und loadListBtn
+
+
+
+// Austesten von Delete-Funktion:
+
+//WO
+const delBtn = document.getElementsByClassName("delBtn");
+//const todoValue = document.getElementsByTagName("li")
+//WAS
+
+for (let i = 0; i < delBtn.length; i++) {
+    delBtn[i].addEventListener('click', () => {
+    delBtn[i].parentElement.style.display = "none";
+    })
+  }
+
+
+
+//}
+//WANN
+//delBtn.addEventListener ("click", deleteListItem);
+
+
 outputField.addEventListener("click", (e) => {
     // outputField.classList.toggle("todoListItem");
     // e.target.classList.toggle("todoListItemChecked");
-    handleMarkAsDoneTodo('', e.target);
-    });
-//TODO addEventListener für saveListBtn und loadListBtn
+    const tagName = e.target.tagName;
+
+    if (tagName === 'LI' || tagName === 'SPAN') {
+        handleMarkAsDoneTodo('', e.target);
+    } else if (tagName === 'BUTTON') {
+        const btnName = e.target.name;
+        // console.log(e.target.name);
+
+        if (btnName === 'editBtn') {
+            console.log('editBtn');
+            handleEditTodo('', e.target);
+        } else if (btnName === 'delBtn') {
+            console.log('delBtn');
+            handleDeleteTodo();
+            e.target.parentElement.style.display = "none";
+            console.log(e.target.parentElement);
+        }
+    }
+});
