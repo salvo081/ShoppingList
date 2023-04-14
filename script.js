@@ -10,7 +10,7 @@
 //nur das Array und die Functions verwenden
 //keine Elemente aus dem DOM verwenden
 //Model kennt das DOM nicht
-const todoList = [
+let todoList = [
     // {id: '1', listValue: 'Apples', done: false}
 ];
 
@@ -46,10 +46,16 @@ function markAsDoneTodo(id) {
 
 function saveTodoList() {
     //TODO save to Local Storage
+    const jsonList = JSON.stringify(todoList);
+    // console.log(jsonList);
+    localStorage.setItem("todoList", jsonList);
 }
 
 function loadTodoList() {
     //TODO load from Local Storage
+    // const listFromLocalStorage = ...
+    todoList = JSON.parse(localStorage.getItem("todoList"));
+    // console.log(todoList);
 }
 
 //VIEW
@@ -61,6 +67,8 @@ function loadTodoList() {
 const inputForm = document.getElementById('inputForm');
 const inputField = document.getElementById('inputField');
 const outputField = document.getElementById('todoList');
+const saveListBtn = document.getElementById('saveListBtn');
+const loadListBtn = document.getElementById('loadListBtn');
 
 //WAS
 function createNewListItem(id, listValue) {
@@ -101,8 +109,9 @@ function editListItem(id, target) {
     const inputItem = liChildren.find(tag => tag.tagName === 'INPUT');
 
     if(li.dataset.mode === 'default') {
+        //mode default
         if (typeof inputItem === 'undefined') {
-            //span hidden, inputItem does not exist
+            //inputItem does not exist
             const newInputItem = document.createElement('input');
             newInputItem.classList.add('listValueInput');
             newInputItem.type = 'text';
@@ -119,7 +128,7 @@ function editListItem(id, target) {
             li.insertAdjacentElement('afterbegin', newInputItem);
             newInputItem.focus();
         } else {
-            //span hidden, inputItem exists
+            //inputItem exists
             inputItem.classList.remove('hide');
             inputItem.focus();
         }
@@ -128,9 +137,11 @@ function editListItem(id, target) {
         target.innerText = 'Save';
         li.dataset.mode = 'edit';
     } else {
+        //mode edit
         if (typeof inputItem !== 'undefined') {
-            //span visible, inputItem exists
+            //inputItem exists
             const inputItemValue = inputItem.value.trim();
+            inputItem.value = inputItemValue;
 
             if (inputItemValue !== '') {
                 //Input-Item ausblenden
@@ -166,6 +177,18 @@ function markAsDoneListItem(id, target) {
 
 function loadListItems(todoList) {
     //TODO loadListItems
+    console.log(todoList);
+
+    while (outputField.firstChild) {
+        outputField.removeChild(outputField.firstChild);
+    }
+
+    todoList.forEach(el => {
+        const newListItem = createNewListItem(el.id, el.listValue);
+        console.log(newListItem);
+
+        outputField.appendChild(newListItem);
+    });
 }
 
 function getListValue() {
@@ -173,7 +196,7 @@ function getListValue() {
 }
 
 function clearListValue() {
-    //TODO clearListValue
+    inputField.value = '';
 }
 
 //CONTROLLER
@@ -187,6 +210,7 @@ function handleAddTodo(listValue) {
     //Update View
     const newListItem = createNewListItem(todoListObj.id, todoListObj.listValue);
     addListItem(newListItem);
+    clearListValue();
 }
 
 function handleEditTodo(id, target) {
@@ -251,6 +275,7 @@ inputForm.addEventListener('submit', (e) => {
 
 outputField.addEventListener("click", (e) => {
     const tagName = e.target.tagName;
+    console.log(tagName);
     if (tagName === 'UL') return;
 
     //id aus dem li-Tag auslesen
@@ -262,7 +287,7 @@ outputField.addEventListener("click", (e) => {
         const btnName = e.target.name;
 
         if (btnName === 'editBtn') {
-            console.log('editBtn');
+            // console.log('editBtn');
             handleEditTodo(id, e.target);
         } else if (btnName === 'delBtn') {
             console.log('delBtn');
@@ -271,3 +296,11 @@ outputField.addEventListener("click", (e) => {
     }
 });
 //TODO addEventListener für saveListBtn und loadListBtn
+
+saveListBtn.addEventListener('click', (e) => {
+    handleSaveTodoList();
+});
+
+loadListBtn.addEventListener('click', (e) => {
+    handleLoadTodoList();
+});

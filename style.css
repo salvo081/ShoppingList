@@ -91,8 +91,16 @@ border: 1px solid black;
 /* Mark as done */
 .todoListItemChecked {
     background-color: grey;
-    text-decoration: line-through;
+    /* text-decoration: line-through; */
     color: white;
+}
+
+.todoListItemChecked span {
+    text-decoration: line-through;
+}
+
+.listValue {
+    user-select: none;
 }
 
 .editBtn,
@@ -101,6 +109,7 @@ border: 1px solid black;
     border-radius: 5px;
     color: #344e41;
     font-weight: bold;
+    user-select: none;
 }
 
 #listBtns {
@@ -115,6 +124,7 @@ border: 1px solid black;
     border-radius: 5px;
     color: #344e41;
     font-weight: bold;
+    user-select: none;
 }
 
 .hide {
