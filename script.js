@@ -95,7 +95,6 @@ function addListItem(newListItem) {
 }
 
 function editListItem(id, target) {
-    //TODO editListItem
     const li = target.parentNode;
     const liChildren = Array.from(li.children);
     const span = liChildren.find(tag => tag.tagName === 'SPAN');
@@ -162,7 +161,6 @@ function deleteListItem(id, target) {
 }
 
 function markAsDoneListItem(id, target) {
-    //TODO markAsDoneListItem
     target.closest('li').classList.toggle("todoListItemChecked");
 }
 
@@ -262,7 +260,6 @@ outputField.addEventListener("click", (e) => {
         handleMarkAsDoneTodo(id, e.target);
     } else if (tagName === 'BUTTON') {
         const btnName = e.target.name;
-        // console.log(e.target.name);
 
         if (btnName === 'editBtn') {
             console.log('editBtn');
